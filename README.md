@@ -18,7 +18,7 @@ schema files *are* your API!
 Manifold is best experienced in [IntelliJ IDEA](https://www.jetbrains.com/idea/download/).
 * Install the Manifold IntelliJ plugin directly from IntelliJ IDEA:
 
-   <kbd>Settings</kbd> ➜ <kbd>Plugins</kbd> ➜ <kbd>Browse repositories</kbd> ➜ search: `Manifold`
+   <kbd>Settings</kbd> ➜ <kbd>Plugins</kbd> ➜ <kbd>Marketplace</kbd> ➜ search: `Manifold`
 
 * Close and relaunch IDEA
 * Open this project: `manifold-sample-graphql-app`

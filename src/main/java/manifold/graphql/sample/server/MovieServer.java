@@ -4,14 +4,15 @@ import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.GraphQLError;
+import manifold.api.json.Json;
 import manifold.ext.DataBindings;
 import manifold.graphql.request.GqlRequestBody;
+import spark.Response;
 
 import java.util.*;
 
 import static manifold.api.json.Json.fromJson;
-import static spark.Spark.port;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 /**
  * A simple GraphQL Server using SparkJava and Manifold.
@@ -24,7 +25,7 @@ public class MovieServer {
     GraphQL graphQL = Setup.init();
 
     //
-    // Handle POST request for the `movies.graphql` schema
+    // Handle POST request, assumes JSON request content
     //
     post("/graphql", (req, res) -> {
       GqlRequestBody request = (GqlRequestBody) fromJson(req.body());
@@ -32,19 +33,33 @@ public class MovieServer {
         .query(request.getQuery())
         .variables((DataBindings)request.getVariables())
         .build();
-      ExecutionResult execute = graphQL.execute(exec);
-
-      DataBindings result = new DataBindings();
-      List<GraphQLError> errors = execute.getErrors();
-      if (!errors.isEmpty()) {
-        result.put("errors", errors.stream().map(GraphQLError::toSpecification).toList());
-      }
-      Object data = execute.getData();
-      if (data != null) {
-        result.put("data", data);
-      }
-      res.type("application/json");
-      return result.toJson();
+      return executeRequest(graphQL, res, exec);
     });
+
+    //
+    // Handle Get request, assumes JSON request content
+    //
+    get("/graphql", (req, res) -> {
+      ExecutionInput exec = ExecutionInput.newExecutionInput()
+        .query(req.queryParams("query"))
+        .variables((DataBindings) Json.fromJson(req.queryParams("variables")))
+        .build();
+      return executeRequest(graphQL, res, exec);
+    });
+  }
+
+  private static Object executeRequest(GraphQL graphQL, Response res, ExecutionInput exec) {
+    ExecutionResult execute = graphQL.execute(exec);
+    DataBindings result = new DataBindings();
+    List<GraphQLError> errors = execute.getErrors();
+    if (!errors.isEmpty()) {
+      result.put("errors", errors.stream().map(GraphQLError::toSpecification).toList());
+    }
+    Object data = execute.getData();
+    if (data != null) {
+      result.put("data", data);
+    }
+    res.type("application/json");
+    return result.toJson();
   }
 }

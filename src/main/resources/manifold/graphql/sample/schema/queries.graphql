@@ -90,6 +90,12 @@ query OnePerson($id: ID!) {
   }
 }
 
+query ManyPersons {
+  persons {
+    name
+  }
+}
+
 query OneAnimal($id: ID!) {
   animal(id: $id) {
     id

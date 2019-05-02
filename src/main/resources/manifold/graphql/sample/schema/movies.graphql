@@ -8,11 +8,12 @@ schema {
 }
 
 type QueryRoot {
+  movie(id: ID!) : Movie
   movies(title: String, genre: Genre = Action, releaseDate: Date) : [Movie!]
   actors(title: String, genre: Genre) : [CastMember!]!
-  movie(id: ID!) : Movie
   role(id: ID!) : Role
   person(id: ID!) : Person
+  persons: [Person]!
   animal(id: ID!) : Animal
   review(id: ID!) : Review
 }
@@ -84,7 +85,7 @@ input MovieInput {
 
 union CastMember = Person | Animal
 
-scalar Date
+scalar Date # Java LocalDate
 
 enum Type {
   Main, Supporting, Antagonist, Tertiary, Flat

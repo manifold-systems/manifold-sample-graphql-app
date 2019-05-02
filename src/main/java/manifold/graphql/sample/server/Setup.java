@@ -39,6 +39,7 @@ public class Setup {
           .dataFetcher("movie", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getMovies().values()))
           .dataFetcher("role", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getRoles().values()))
           .dataFetcher("person", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getPersons().values()))
+          .dataFetcher("persons", makeFieldMatchingDataFetcherList((Collection) MovieData.instance().getPersons().values()))
           .dataFetcher("animal", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getAnimals().values()))
           .dataFetcher("review", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getReviews().values())))
       .type(MutationRoot.class.getSimpleName(),

@@ -14,7 +14,7 @@
         <dependency>
             <groupId>systems.manifold</groupId>
             <artifactId>manifold-all</artifactId>
-            <version>0.69-alpha</version>
+            <version>0.71-alpha</version>
         </dependency>
 
         <!--SparkJava -->

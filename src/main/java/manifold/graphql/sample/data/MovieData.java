@@ -66,15 +66,19 @@ public class MovieData {
     _roles = Stream.of(MICHAEL_DELANEY, HILTS, DOC_MCCOY, COWBOY, HENDLY, COMANCHE, ACE).toMap(role -> role.getId());
 
     Movie LE_MANS = Movie.builder(id(), "Le Mans", list(Action), date(1971, 6, 3), list(MICHAEL_DELANEY))
+      .withStarring(STEVE_MCQUEEN)
       .build();
     Movie THE_GREAT_ESCAPE = Movie.builder(id(), "The Great Escape", list(Action, Drama), date(1963, 7, 4),
       list(HILTS, HENDLY))
+      .withStarring(STEVE_MCQUEEN)
       .build();
     Movie THE_GETAWAY = Movie.builder(id(), "The Getaway", list(Action, Drama, Romance), date(1972, 12, 6),
       list(DOC_MCCOY, COWBOY))
+      .withStarring(STEVE_MCQUEEN)
       .build();
     Movie TONKA = Movie.builder(id(), "Tonka", list(Drama, Western), date(1958, 12, 25),
       list(COMANCHE, ACE))
+      .withStarring(TRIGGER)
       .build();
     _movies = Stream.of(LE_MANS, THE_GREAT_ESCAPE, THE_GETAWAY, TONKA).toMap(movie -> movie.getId(), e -> e);
 

@@ -27,6 +27,9 @@ Manifold is best experienced in [IntelliJ IDEA](https://www.jetbrains.com/idea/d
   <kbd>Project Structure</kbd> ➜ <kbd>SDKs</kbd> ➜ <kbd>+</kbd> ➜ <kbd>JDK</kbd>
 * Or change the `pom.xml` file to use a JDK of your choosing, Manifold fully supports Java 8 - 12
 
+>**Note:** Don't forget to install the [JS GraphQL](https://plugins.jetbrains.com/plugin/8097-js-graphql) plugin
+for superb GraphQL file editing support in your project. 
+
 ### Running the `MovieServer`
 * Run the `MovieServer` class directly with Java
 * _or_ load this project in IntelliJ and run the `MovieServer` class

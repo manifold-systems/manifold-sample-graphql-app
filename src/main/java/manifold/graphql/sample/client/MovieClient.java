@@ -2,8 +2,6 @@ package manifold.graphql.sample.client;
 
 import manifold.graphql.sample.schema.queries;
 
-import java.util.List;
-
 import static java.lang.System.out;
 import static manifold.graphql.sample.schema.movies.Genre.*;
 import static manifold.graphql.sample.schema.movies.*;

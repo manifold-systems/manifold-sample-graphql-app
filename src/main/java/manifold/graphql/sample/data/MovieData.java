@@ -12,7 +12,7 @@ import static manifold.graphql.sample.schema.movies.Type.Supporting;
 /**
  * Simple in-memory sample data for the {@code movies.sample} schema
  */
-//@SuppressWarnings("Convert2MethodRef")
+@SuppressWarnings("Convert2MethodRef")
 public class MovieData {
   private static MovieData INSTANCE = null;
 

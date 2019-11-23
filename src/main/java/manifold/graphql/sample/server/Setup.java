@@ -8,7 +8,7 @@ import graphql.schema.idl.RuntimeWiring.Builder;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
-import manifold.ext.DataBindings;
+import manifold.api.json.DataBindings;
 import manifold.ext.RuntimeMethods;
 import manifold.graphql.sample.data.MovieData;
 import manifold.graphql.sample.schema.movies;

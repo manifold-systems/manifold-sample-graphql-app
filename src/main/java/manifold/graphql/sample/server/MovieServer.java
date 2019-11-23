@@ -4,8 +4,8 @@ import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.GraphQLError;
+import manifold.api.json.DataBindings;
 import manifold.api.json.Json;
-import manifold.ext.DataBindings;
 import manifold.graphql.request.GqlRequestBody;
 import spark.Response;
 

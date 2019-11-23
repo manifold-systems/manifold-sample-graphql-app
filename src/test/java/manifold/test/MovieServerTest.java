@@ -6,7 +6,6 @@ import manifold.graphql.request.Executor;
 import manifold.graphql.sample.schema.movies;
 import manifold.graphql.sample.schema.queries;
 import manifold.graphql.sample.server.MovieServer;
-import manifold.api.util.JsonUtil;
 import manifold.util.ReflectUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

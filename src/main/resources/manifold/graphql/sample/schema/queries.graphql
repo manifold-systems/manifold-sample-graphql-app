@@ -131,6 +131,10 @@ query CompareRoles($id1: ID!, $id2: ID!)
   }
 }
 
+#
+# Fragments
+#
+
 fragment comparisonFields on Actor {
   name
   ... on Person {

@@ -5,6 +5,8 @@ module manifold.sample.graphql.app {
     requires manifold.exceptions;
     // Use the Collections extension library
     requires manifold.collections;
+    // Use the String Templates library (string interpolation)
+    requires manifold.strings;
 
     // Include transitive dependencies manually since manifold jars are "automatic" modules
     // (they don't define manifold-info.java files, thus no 'requires' to their dependencies)

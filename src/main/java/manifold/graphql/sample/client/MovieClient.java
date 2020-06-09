@@ -14,7 +14,7 @@ import static manifold.graphql.sample.schema.queries.*;
  * Remember to run the {@code MovieServer} before running this class :)
  */
 public class MovieClient {
-  private static String ENDPOINT = "http://localhost:4567/graphql";
+  private static final String ENDPOINT = "http://localhost:4567/graphql";
 
   public static void main(String[] args) {
     queryExample();

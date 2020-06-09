@@ -9,7 +9,7 @@
     <name>Manifold :: Sample GraphQL App</name>
 
     <properties>
-        <manifold.version>2020.1.12</manifold.version>
+        <manifold.version>2020.1.13</manifold.version>
     </properties>
 
     <dependencies>
@@ -19,30 +19,38 @@
             <groupId>systems.manifold</groupId>
             <artifactId>manifold-graphql</artifactId>
             <version>${manifold.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>systems.manifold</groupId>
+            <artifactId>manifold-graphql-rt</artifactId>
+            <version>${manifold.version}</version>
         </dependency>
 
-        <!-- Manifold : [Un]checked -->
+        <!-- Manifold : [Un]checked (treat checked exceptions as unchecked) -->
         <dependency>
             <groupId>systems.manifold</groupId>
             <artifactId>manifold-exceptions</artifactId>
             <version>${manifold.version}</version>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- Manifold : Collections -->
+        <!-- Manifold : Collections (extension library for collections) -->
         <dependency>
             <groupId>systems.manifold</groupId>
             <artifactId>manifold-collections</artifactId>
             <version>${manifold.version}</version>
         </dependency>
 
-        <!-- Manifold : Strings -->
+        <!-- Manifold : Strings (for string interpolation) -->
         <dependency>
             <groupId>systems.manifold</groupId>
             <artifactId>manifold-strings</artifactId>
             <version>${manifold.version}</version>
+            <scope>provided</scope>
         </dependency>
 
-        <!--SparkJava -->
+        <!--SparkJava needed for the GraphQL *server* -->
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
@@ -52,6 +60,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.13</version>
+        </dependency>
+        <!-- graphql-java library needed for the GraphQL *server* -->
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java</artifactId>
+            <version>13.0</version>
         </dependency>
 
         <!--Testing-->
@@ -79,7 +93,7 @@
                         <!-- Configure manifold plugin -->
                         <arg>-Xplugin:Manifold</arg>
                     </compilerArgs>
-                    <!-- Add the processor path for the plugin (required for Java 9+ -->
+                    <!-- Add the processor path for the plugin (required for Java 9+) -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>systems.manifold</groupId>
@@ -101,6 +115,7 @@
             </plugin>
 
             <plugin>
+                <!-- surefire for testing -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>

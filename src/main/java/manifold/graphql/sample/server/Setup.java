@@ -8,11 +8,12 @@ import graphql.schema.idl.RuntimeWiring.Builder;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
-import manifold.api.json.DataBindings;
-import manifold.ext.RuntimeMethods;
+import manifold.ext.rt.RuntimeMethods;
+import manifold.graphql.rt.api.GqlScalars;
 import manifold.graphql.sample.data.MovieData;
 import manifold.graphql.sample.schema.movies;
-import manifold.graphql.type.GqlScalars;
+import manifold.json.rt.api.DataBindings;
+import manifold.json.rt.api.IJsonBindingsBacked;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,7 +36,7 @@ public class Setup {
         builder -> builder
           .dataFetcher("movies", makeFieldMatchingDataFetcherList((Collection) MovieData.instance().getMovies().values()))
           .dataFetcher("actors", makeMappedFieldMatchingDataFetcherList((Collection) MovieData.instance().getMovies().values(),
-            e -> ((Movie) e).getCast().stream().map(c -> (DataBindings) c.getActor()).toSet()))
+            e -> ((Movie) e).getCast().stream().map(c -> c.getActor().getBindings()).toSet()))
           .dataFetcher("movie", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getMovies().values()))
           .dataFetcher("role", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getRoles().values()))
           .dataFetcher("person", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getPersons().values()))
@@ -63,27 +64,31 @@ public class Setup {
     return GraphQL.newGraphQL(graphQLSchema).build();
   }
 
-  private static DataFetcher<List<DataBindings>> makeFieldMatchingDataFetcherList(Collection<DataBindings> list) {
+  private static DataFetcher<List<DataBindings>> makeFieldMatchingDataFetcherList(Collection<IJsonBindingsBacked> list) {
     return env -> list.stream()
-      .filter(bindings -> env.getArguments().entrySet().stream()
-        .allMatch(arg -> arg.getValue() == null || isFieldMatch(bindings, arg.getKey(), arg.getValue())))
+      .filter(item -> env.getArguments().entrySet().stream()
+        .allMatch(arg -> arg.getValue() == null || isFieldMatch(item.getBindings(), arg.getKey(), arg.getValue())))
+      .map(IJsonBindingsBacked::getBindings)
       .collect(Collectors.toList());
   }
 
-  private static DataFetcher<List<DataBindings>> makeMappedFieldMatchingDataFetcherList(Collection<DataBindings> list,
-                                                                                        Function<DataBindings, Set<? extends DataBindings>> mapper) {
+  private static DataFetcher<List<DataBindings>> makeMappedFieldMatchingDataFetcherList(
+          Collection<IJsonBindingsBacked> list,
+          Function<DataBindings, Set<? extends DataBindings>> mapper) {
     return env -> list.stream()
-      .filter(bindings -> env.getArguments().entrySet().stream()
-        .allMatch(arg -> arg.getValue() == null || isFieldMatch(bindings, arg.getKey(), arg.getValue())))
-      .map(e -> mapper.apply(e))
-      .flatMap(e -> e.stream())
+      .filter(item -> env.getArguments().entrySet().stream()
+        .allMatch(arg -> arg.getValue() == null || isFieldMatch(item.getBindings(), arg.getKey(), arg.getValue())))
+            .map(IJsonBindingsBacked::getBindings)
+      .map(mapper::apply)
+      .flatMap(Collection::stream)
       .collect(Collectors.toList());
   }
 
-  private static DataFetcher<DataBindings> makeFieldMatchingDataFetcherSingle(Collection<DataBindings> list) {
+  private static DataFetcher<DataBindings> makeFieldMatchingDataFetcherSingle(Collection<IJsonBindingsBacked> list) {
     return env -> list.stream()
-      .filter(bindings -> env.getArguments().entrySet().stream()
-        .allMatch(arg -> arg.getValue() == null || isFieldMatch(bindings, arg.getKey(), arg.getValue())))
+      .filter(item -> env.getArguments().entrySet().stream()
+        .allMatch(arg -> arg.getValue() == null || isFieldMatch(item.getBindings(), arg.getKey(), arg.getValue())))
+      .map(IJsonBindingsBacked::getBindings)
       .findFirst().orElse(null);
   }
 
@@ -91,7 +96,7 @@ public class Setup {
     return env -> {
       Review review = MovieData.instance()
         .createReview(env.getArgument("movieId"), env.getArgument("review"));
-      return (DataBindings) review;
+      return review.getBindings();
     };
   }
 

@@ -4,14 +4,14 @@ import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.GraphQLError;
-import manifold.api.json.DataBindings;
-import manifold.api.json.Json;
-import manifold.graphql.request.GqlRequestBody;
+import manifold.graphql.rt.api.request.GqlRequestBody;
+import manifold.json.rt.Json;
+import manifold.json.rt.api.DataBindings;
 import spark.Response;
 
 import java.util.*;
 
-import static manifold.api.json.Json.fromJson;
+import static manifold.json.rt.Json.fromJson;
 import static spark.Spark.*;
 
 /**

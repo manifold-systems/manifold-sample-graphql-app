@@ -33,16 +33,23 @@ public class Setup {
     TypeDefinitionRegistry typeDefinitionRegistry = new SchemaParser().parse(new InputStreamReader(stream));
     Builder runtimeWiringBuilder = newRuntimeWiring()
       .type(QueryRoot.class.getSimpleName(),
-        builder -> builder
-          .dataFetcher("movies", makeFieldMatchingDataFetcherList((Collection) MovieData.instance().getMovies().values()))
-          .dataFetcher("actors", makeMappedFieldMatchingDataFetcherList((Collection) MovieData.instance().getMovies().values(),
-            e -> ((Movie) e).getCast().stream().map(c -> c.getActor().getBindings()).toSet()))
-          .dataFetcher("movie", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getMovies().values()))
-          .dataFetcher("role", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getRoles().values()))
-          .dataFetcher("person", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getPersons().values()))
-          .dataFetcher("persons", makeFieldMatchingDataFetcherList((Collection) MovieData.instance().getPersons().values()))
-          .dataFetcher("animal", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getAnimals().values()))
-          .dataFetcher("review", makeFieldMatchingDataFetcherSingle((Collection) MovieData.instance().getReviews().values())))
+        builder -> {
+          Collection<Movie> movies = MovieData.instance().getMovies().values();
+          Collection<Role> roles = MovieData.instance().getRoles().values();
+          Collection<Person> persons = MovieData.instance().getPersons().values();
+          Collection<Animal> animals = MovieData.instance().getAnimals().values();
+          Collection<Review> reviews = MovieData.instance().getReviews().values();
+          return builder
+            .dataFetcher("movies", makeFieldMatchingDataFetcherList(movies))
+            .dataFetcher("actors", makeMappedFieldMatchingDataFetcherList(movies,
+              e -> ((Movie) e).getCast().stream().map(c -> c.getActor().getBindings()).toSet()))
+            .dataFetcher("movie", makeFieldMatchingDataFetcherSingle(movies))
+            .dataFetcher("role", makeFieldMatchingDataFetcherSingle(roles))
+            .dataFetcher("person", makeFieldMatchingDataFetcherSingle(persons))
+            .dataFetcher("persons", makeFieldMatchingDataFetcherList(persons))
+            .dataFetcher("animal", makeFieldMatchingDataFetcherSingle(animals))
+            .dataFetcher("review", makeFieldMatchingDataFetcherSingle(reviews));
+        })
       .type(MutationRoot.class.getSimpleName(),
         builder -> builder
           .dataFetcher("createReview", makeCreateReviewFetcher()))
@@ -64,7 +71,7 @@ public class Setup {
     return GraphQL.newGraphQL(graphQLSchema).build();
   }
 
-  private static DataFetcher<List<DataBindings>> makeFieldMatchingDataFetcherList(Collection<IJsonBindingsBacked> list) {
+  private static DataFetcher<List<DataBindings>> makeFieldMatchingDataFetcherList(Collection<? extends IJsonBindingsBacked> list) {
     return env -> list.stream()
       .filter(item -> env.getArguments().entrySet().stream()
         .allMatch(arg -> arg.getValue() == null || isFieldMatch(item.getBindings(), arg.getKey(), arg.getValue())))
@@ -73,7 +80,7 @@ public class Setup {
   }
 
   private static DataFetcher<List<DataBindings>> makeMappedFieldMatchingDataFetcherList(
-          Collection<IJsonBindingsBacked> list,
+          Collection<? extends IJsonBindingsBacked> list,
           Function<DataBindings, Set<? extends DataBindings>> mapper) {
     return env -> list.stream()
       .filter(item -> env.getArguments().entrySet().stream()
@@ -84,7 +91,7 @@ public class Setup {
       .collect(Collectors.toList());
   }
 
-  private static DataFetcher<DataBindings> makeFieldMatchingDataFetcherSingle(Collection<IJsonBindingsBacked> list) {
+  private static DataFetcher<DataBindings> makeFieldMatchingDataFetcherSingle(Collection<? extends IJsonBindingsBacked> list) {
     return env -> list.stream()
       .filter(item -> env.getArguments().entrySet().stream()
         .allMatch(arg -> arg.getValue() == null || isFieldMatch(item.getBindings(), arg.getKey(), arg.getValue())))

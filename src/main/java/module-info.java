@@ -6,7 +6,7 @@ module manifold.sample.graphql.app {
     requires manifold.json.rt;
     requires manifold.graphql.rt;
     requires manifold.collections;
-    requires graphql.java;
+    requires com.graphqljava;
     requires spark.core;
     requires jdk.unsupported;
 }

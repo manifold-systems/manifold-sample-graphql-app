@@ -9,7 +9,7 @@
     <name>Manifold :: Sample GraphQL App</name>
 
     <properties>
-        <manifold.version>2021.1.13</manifold.version>
+        <manifold.version>2021.1.15</manifold.version>
     </properties>
 
     <dependencies>
@@ -64,8 +64,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>11</source>
+                    <target>11</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgs>
                         <!-- Configure manifold plugin -->

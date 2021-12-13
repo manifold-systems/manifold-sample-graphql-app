@@ -1,7 +1,7 @@
 #
 # Sample queries against the `movies.graphql` schema file
 #
-# Use Manifold to access queryies type-safely in Java directly by name such as MovieQuery.builder()...
+# Use Manifold to access queries type-safely in Java directly by name such as MovieQuery.builder()...
 #
 
 query MovieQuery($title: String, $genre: Genre, $releaseDate: Date) {

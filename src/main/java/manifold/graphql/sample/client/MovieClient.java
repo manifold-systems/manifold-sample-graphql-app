@@ -26,11 +26,9 @@ public class MovieClient {
     var result = query.request(ENDPOINT).post();
     var actionMovies = result.getMovies();
     for (var movie : actionMovies) {
-      out.println("""
-        Title: ${movie.getTitle()}
-        Genre: ${movie.getGenre()}
-        Year: ${movie.getReleaseDate().getYear()}
-        """);
+      out.println("Title: ${movie.getTitle()}\n" +
+                  "Genre: ${movie.getGenre()}\n" +
+                  "Year: ${movie.getReleaseDate().getYear()}\n");
     }
   }
 
@@ -42,10 +40,8 @@ public class MovieClient {
     var review = ReviewInput.builder(5).withComment("Topnotch racing film.").build();
     var mutation = ReviewMutation.builder(movie.getId(), review).build();
     var createdReview = mutation.request(ENDPOINT).post().getCreateReview();
-    out.println("""
-      Review for: ${movie.getTitle()}
-      Stars: ${createdReview.getStars()}
-      Comment: ${createdReview.getComment()}
-      """);
+    out.println("Review for: ${movie.getTitle()}\n" +
+                "Stars: ${createdReview.getStars()}\n" +
+                "Comment: ${createdReview.getComment()}\n");
   }
 }

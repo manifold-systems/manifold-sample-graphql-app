@@ -9,7 +9,7 @@
     <name>Manifold :: Sample GraphQL App</name>
 
     <properties>
-        <manifold.version>2022.1.33</manifold.version>
+        <manifold.version>2023.1.4</manifold.version>
     </properties>
 
     <dependencies>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java</artifactId>
-            <version>16.2</version>
+            <version>20.1</version>
         </dependency>
 
         <!--Testing-->

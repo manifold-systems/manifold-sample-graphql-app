@@ -19,6 +19,7 @@ public class MovieClient {
   public static void main(String[] args) {
     queryExample();
     mutationExample();
+    localTypeSafeQueryExample();
   }
 
   private static void queryExample() {
@@ -44,4 +45,30 @@ public class MovieClient {
                 "Stars: ${createdReview.getStars()}\n" +
                 "Comment: ${createdReview.getComment()}\n");
   }
+
+  // note, you can install the GraphQL plugin (https://plugins.jetbrains.com/plugin/8097-graphql)
+  //  for rich display/editing of embedded graphql
+  private static void localTypeSafeQueryExample()
+  {
+    /* [MyQuery.graphql/]
+      query Movies($title: String, $genre: Genre, $releaseDate: Date) {
+          movies(title: $title, genre: $genre, releaseDate: $releaseDate) {
+              id
+              title
+              genre
+              releaseDate
+          }
+      }
+    */
+    // notice MyQuery is an embedded GraphQL query that can be used directly and type-safely as if a resource file
+    var actionMoviesQuery = MyQuery.Movies.builder()
+            .withGenre(Action).build();
+    var res = actionMoviesQuery.request(ENDPOINT).post();
+    for (var movie : res.getMovies()) {
+      out.println("Title: ${movie.getTitle()}\n" +
+              "Genre: ${movie.getGenre()}\n" +
+              "Year: ${movie.getReleaseDate().getYear()}\n");
+    }
+  }
+
 }

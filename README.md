@@ -25,7 +25,7 @@ Manifold is best experienced in [IntelliJ IDEA](https://www.jetbrains.com/idea/d
 * Be sure to setup an SDK for <b>Java 11</b>:
 
   <kbd>Project Structure</kbd> ➜ <kbd>SDKs</kbd> ➜ <kbd>+</kbd> ➜ <kbd>JDK</kbd>
-* Or change the `pom.xml` file to use a JDK of your choosing, Manifold fully supports Java 8 - 16
+* Or change the `pom.xml` file to use a JDK of your choosing, Manifold fully supports Java 8 - 20
 
 >**Note:** Don't forget to install the [JS GraphQL](https://plugins.jetbrains.com/plugin/8097-js-graphql) plugin
 for superb GraphQL file editing support in your project. 

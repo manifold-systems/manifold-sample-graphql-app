@@ -9,7 +9,7 @@
     <name>Manifold :: Sample GraphQL App</name>
 
     <properties>
-        <manifold.version>2023.1.32</manifold.version>
+        <manifold.version>2024.1.6</manifold.version>
     </properties>
 
     <dependencies>
